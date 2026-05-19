@@ -6,29 +6,129 @@
 
   <title>AnimeVerse</title>
 
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="css/style.css">
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  >
 </head>
+
 <body>
 
-<header>
-  <div class="logo">AnimeVerse</div>
+  <!-- HEADER -->
 
-  <input type="text" id="searchInput" placeholder="Search anime...">
-</header>
+  <header>
 
-<section class="hero">
-  <div class="overlay">
-    <h1>Watch Anime Online</h1>
-    <p>Modern Anime Streaming Platform</p>
-  </div>
-</section>
+    <div class="logo">
+      AnimeVerse
+    </div>
 
-<section class="section">
-  <h2>Trending Anime</h2>
+    <nav>
+      <a href="#">Home</a>
+      <a href="#">Trending</a>
+      <a href="#">Movies</a>
+      <a href="#">Series</a>
+      <a href="#">Popular</a>
+    </nav>
 
-  <div id="animeGrid" class="anime-grid"></div>
-</section>
+    <div class="search-box">
+      <input
+        type="text"
+        id="searchInput"
+        placeholder="Search anime..."
+      >
+    </div>
 
-<script src="app.js"></script>
+  </header>
+
+  <!-- HERO -->
+
+  <section class="hero">
+
+    <div class="hero-content">
+
+      <h1>
+        Watch Anime Online
+      </h1>
+
+      <p>
+        Stream trending anime series and movies in HD quality.
+        Discover thousands of anime episodes instantly.
+      </p>
+
+      <div class="hero-buttons">
+
+        <button class="watch-btn">
+          Watch Now
+        </button>
+
+        <button class="info-btn">
+          More Info
+        </button>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- MAIN -->
+
+  <main class="main">
+
+    <!-- TRENDING -->
+
+    <section>
+
+      <h2 class="section-title">
+        Trending Anime
+      </h2>
+
+      <div class="anime-grid" id="animeGrid">
+
+      </div>
+
+    </section>
+
+    <!-- LATEST -->
+
+    <section style="margin-top:80px;">
+
+      <h2 class="section-title">
+        Latest Episodes
+      </h2>
+
+      <div class="anime-grid" id="latestGrid">
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+
+  <footer>
+
+    <h2>AnimeVerse</h2>
+
+    <div class="footer-links">
+
+      <a href="#">Home</a>
+      <a href="#">DMCA</a>
+      <a href="#">Privacy Policy</a>
+      <a href="#">Contact</a>
+
+    </div>
+
+    <p style="margin-top:30px;color:#777;">
+      © 2026 AnimeVerse. All Rights Reserved.
+    </p>
+
+  </footer>
+
+  <script src="js/app.js"></script>
+
 </body>
 </html>
