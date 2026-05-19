@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Watch Anime</title>
+
+  <link rel="stylesheet" href="css/style.css">
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  >
+
+</head>
+
+<body>
+
+  <!-- HEADER -->
+
+  <header>
+
+    <div class="logo">
+      AnimeVerse
+    </div>
+
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="#">Trending</a>
+      <a href="#">Movies</a>
+    </nav>
+
+    <div class="search-box">
+      <input type="text" placeholder="Search anime...">
+    </div>
+
+  </header>
+
+  <!-- WATCH CONTAINER -->
+
+  <div class="watch-container">
+
+    <!-- LEFT -->
+
+    <div>
+
+      <!-- PLAYER -->
+
+      <div class="player">
+
+        <iframe
+          id="videoPlayer"
+          src=""
+          allowfullscreen
+        ></iframe>
+
+      </div>
+
+      <!-- SERVERS -->
+
+      <div class="server-list">
+
+        <button class="server-btn active">
+          Server 1
+        </button>
+
+        <button class="server-btn">
+          Server 2
+        </button>
+
+        <button class="server-btn">
+          Server 3
+        </button>
+
+      </div>
+
+      <!-- EPISODES -->
+
+      <div class="episodes" id="episodeList">
+
+      </div>
+
+      <!-- ANIME DETAILS -->
+
+      <div class="anime-details">
+
+        <img id="animePoster">
+
+        <div>
+
+          <h1 id="animeTitle"></h1>
+
+          <p id="animeSynopsis"></p>
+
+          <div class="anime-meta">
+
+            <span id="animeScore"></span>
+            <span id="animeEpisodes"></span>
+            <span id="animeStatus"></span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- COMMENTS -->
+
+      <div class="comments-box">
+
+        <h2>Comments</h2>
+
+        <textarea
+          placeholder="Write a comment..."
+        ></textarea>
+
+        <button>
+          Send
+        </button>
+
+      </div>
+
+    </div>
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+      <div class="sidebar-card">
+
+        <h3>Trending</h3>
+
+        <div id="trendingSidebar">
+
+        </div>
+
+      </div>
+
+    </aside>
+
+  </div>
+
+  <script src="js/watch.js"></script>
+
+</body>
+</html>
