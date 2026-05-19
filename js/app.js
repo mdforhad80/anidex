@@ -52,7 +52,7 @@ function displayAnime(animeList, container){
     card.addEventListener("click", () => {
 
       window.location.href =
-      `anime.html?id=${anime.mal_id}`;
+      `watch.html?id=${anime.mal_id}`;
 
     });
 
