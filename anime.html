@@ -3,28 +3,304 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Anime Player</title>
-  <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
-
-<div class="player-page">
-
-  <div id="animeInfo"></div>
-
-  <div class="video-wrapper">
-    <iframe
-      id="videoPlayer"
-      width="100%"
-      height="500"
-      allowfullscreen>
-    </iframe>
+  <title>Anime Details - AnimeStream</title>
+  <meta name="description" content="Anime details, episodes, and streaming info">
+  <meta property="og:title" content="Anime Details - AnimeStream">
+  <meta property="og:description" content="Anime details, episodes, and streaming info">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Anime Details - AnimeStream">
+  <meta name="twitter:description" content="Anime details, episodes, and streaming info">
+  <meta name="theme-color" content="#8b5cf6">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="favicon.ico">
+  <link rel="preconnect" href="https://api.jikan.moe">
+  <link rel="preconnect" href="https://megaplay.buzz">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head><body>
+  <!-- Loading Screen -->
+  <div class="loading-screen">
+    <div class="loading-logo">ANIME STREAM</div>
+    <div class="loading-bar">
+      <div class="loading-bar-fill"></div>
+    </div>
   </div>
 
-  <div id="episodes" class="episode-list"></div>
+  <!-- Cursor Glow -->
+  <div class="cursor-glow"></div>
 
-</div>
+  <!-- Particles Canvas -->
+  <canvas id="particles-canvas"></canvas>
 
-<script src="js/anime.js"></script>
+  <!-- Header -->
+  <header class="main-header">
+    <!-- LEFT: Menu -->
+    <div class="header-left">
+      <button class="menu-btn" aria-label="Open menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- CENTER: Logo -->
+    <a href="index.html" class="header-center">
+      <div class="logo-icon">A</div>
+      <span class="logo-text">AnimeStream</span>
+    </a>
+
+    <!-- RIGHT: Search -->
+    <div class="header-right">
+      <button class="search-btn" aria-label="Search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Sidebar Overlay -->
+  <div class="sidebar-overlay"></div>
+
+  <!-- Sidebar -->
+  <nav class="sidebar">
+    <div class="sidebar-header">
+      <span class="sidebar-title">Menu</span>
+      <button class="sidebar-close" aria-label="Close menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+    <ul class="sidebar-nav">
+      <li><a href="index.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        Home
+      </a></li>
+      <li><a href="search.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        Search
+      </a></li>
+      <li><a href="schedule.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Schedule
+      </a></li>
+    </ul>
+    <div class="sidebar-section-title">Discover</div>
+    <ul class="sidebar-nav">
+      <li><a href="search.html?q=&type=tv">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="15" rx="2" ry="2"/><polyline points="17 2 12 7 7 2"/></svg>
+        TV Series
+      </a></li>
+      <li><a href="search.html?q=&type=movie">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+        Movies
+      </a></li>
+      <li><a href="search.html?q=&status=airing">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        Airing
+      </a></li>
+    </ul>
+    <div class="sidebar-section-title">Info</div>
+    <ul class="sidebar-nav">
+      <li><a href="creator.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        Creator
+      </a></li>
+    </ul>
+  </nav>
+
+  <!-- Search Overlay -->
+  <div class="search-overlay">
+    <div class="search-overlay-header">
+      <div class="search-input-wrapper">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input type="text" class="search-input" placeholder="Search anime..." autocomplete="off">
+      </div>
+      <button class="search-close-btn" aria-label="Close search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="search-results">
+      <div class="search-suggestions">
+        <span class="suggestion-tag" data-query="action">⚔️ Action</span>
+        <span class="suggestion-tag" data-query="romance">💕 Romance</span>
+        <span class="suggestion-tag" data-query="isekai">🌌 Isekai</span>
+        <span class="suggestion-tag" data-query="shounen">🔥 Shounen</span>
+        <span class="suggestion-tag" data-query="demon slayer">Demon Slayer</span>
+        <span class="suggestion-tag" data-query="one piece">One Piece</span>
+        <span class="suggestion-tag" data-query="attack on titan">Attack on Titan</span>
+        <span class="suggestion-tag" data-query="jujutsu kaisen">Jujutsu Kaisen</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Anime Details Page -->
+  <main class="anime-details-page">
+    <!-- Banner -->
+    <div class="anime-banner">
+      <img class="anime-banner-img" src="" alt="Banner">
+    </div>
+
+    <!-- Info Section -->
+    <section class="anime-info-section">
+      <div class="anime-info-grid">
+        <div class="anime-poster-wrapper">
+          <img class="anime-poster" src="" alt="Poster">
+        </div>
+        <div class="anime-details-content">
+          <h1 class="anime-title">Loading...</h1>
+          <p class="anime-alt-title"></p>
+          <div class="anime-meta-row"></div>
+          <p class="anime-desc">Loading anime information...</p>
+          <div class="genre-tags"></div>
+          <div class="anime-actions">
+            <a href="#" class="btn btn-primary watch-btn">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+              Watch Now
+            </a>
+            <a href="#episodes" class="btn btn-secondary">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+              Episodes
+            </a>
+          </div>
+          <div class="anime-info-list"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Episodes Section -->
+    <section class="episodes-section" id="episodes">
+      <div class="episodes-header">
+        <h2 class="section-title">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          Episodes
+        </h2>
+        <div class="sub-dub-toggle">
+          <button class="active" data-type="sub">SUB</button>
+          <button data-type="dub">DUB</button>
+        </div>
+      </div>
+      <div class="episodes-grid">
+        <!-- Loaded dynamically -->
+      </div>
+    </section>
+
+    <!-- Characters Section -->
+    <section class="content-section">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            Characters
+          </h2>
+        </div>
+        <div class="characters-grid">
+          <!-- Loaded dynamically -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Recommendations Section -->
+    <section class="content-section related-section">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg>
+            Recommended
+          </h2>
+        </div>
+        <div class="related-grid">
+          <!-- Loaded dynamically -->
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="main-footer">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">AnimeStream</div>
+        <p class="footer-desc">Your premium destination for anime streaming. Watch thousands of anime series and movies in HD quality with sub and dub.</p>
+      </div>
+      <div>
+        <div class="footer-title">Navigation</div>
+        <ul class="footer-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="search.html">Search</a></li>
+          <li><a href="schedule.html">Schedule</a></li>
+          <li><a href="creator.html">Creator</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-title">Categories</div>
+        <ul class="footer-links">
+          <li><a href="search.html?q=&type=tv">TV Series</a></li>
+          <li><a href="search.html?q=&type=movie">Movies</a></li>
+          <li><a href="search.html?q=&status=airing">Airing</a></li>
+          <li><a href="search.html?q=&status=upcoming">Upcoming</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-title">Legal</div>
+        <ul class="footer-links">
+          <li><a href="#">Disclaimer</a></li>
+          <li><a href="#">DMCA</a></li>
+          <li><a href="#">Privacy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copyright">© 2025 AnimeStream. All rights reserved. Powered by Jikan API.</span>
+      <div class="footer-social">
+        <a href="https://github.com" target="_blank" aria-label="GitHub">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+        </a>
+        <a href="#" target="_blank" aria-label="Discord">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Mobile Bottom Navigation -->
+  <nav class="mobile-nav">
+    <a href="index.html" class="mobile-nav-item active">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      Home
+    </a>
+    <a href="search.html" class="mobile-nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      Search
+    </a>
+    <a href="schedule.html" class="mobile-nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      Schedule
+    </a>
+    <a href="creator.html" class="mobile-nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      Creator
+    </a>
+  </nav>
+
+  <!-- Random Button -->
+  <button class="random-btn" aria-label="Random anime">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></svg>
+  </button>
+
+  <!-- Scripts -->
+  <script src="assets/js/utils.js"></script>
+  <script src="assets/js/api.js"></script>
+  <script src="assets/js/storage.js"></script>
+  <script src="assets/js/ui.js"></script>
+  <script src="assets/js/anime.js"></script>
+  <script src="assets/js/player.js"></script>
+  <script src="assets/js/search.js"></script>
+  <script src="assets/js/router.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script>Router.init();</script>
 </body>
 </html>
